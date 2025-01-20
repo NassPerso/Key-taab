@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Picture e-book</title>
+  <script type="text/javascript" src="dataEN.json"></script>
+
+<script src="jquery-1.11.3.min.js"></script>
+<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+<script>
+var i = 0;
+function previous(){document.getElementById("id_du_div1").innerHTML=mydata[i-1].name;
+document.getElementById("img1").src="./img/"+ mydata[i-1].img;
+document.getElementById("son-image1").src="./audio/"+ mydata[i-1].audio;
+i=i+1;};
+function next(){
+document.getElementById("id_du_div1").innerHTML=mydata[i+1].name;
+document.getElementById("img1").src="./img/"+ mydata[i+1].img;
+document.getElementById("son-image1").src="./audio/"+ mydata[i+1].audio;
+i=i+1;
+};
+function affiche(id, b) {
+  document.getElementById(id).style.display = b ? '' : 'none';
+}
+$(function() {
+    $('.image').click(function() {
+        var num = $(this).attr('data-num');
+        //$('#son-' + num).get(0).play();
+		responsiveVoice.speak(mydata[i].name);
+    });
+});
+
+
+  
+</script>
+
+</head>
+<body>
+<script>
+var mydata = JSON.parse(data);
+
+</script>
+
+<audio id="son-image1" ></audio>
+<table>
+<tr><td><img id="img1" onmouseover="affiche('id_du_div1',true)" onmouseout="affiche('id_du_div1',false)" class="image" data-num="image1" width="300" height="300">
+
+</td>
+</tr>
+<tr><td><h3><div align="center" id="id_du_div1" style="display:none;"></h3></div>
+</td>
+</tr>
+<tr><td align="center"><button onclick="previous()">previous</button>
+<button onclick="next()">next</button></td></tr>
+</table>
+
+
+
+
+<script>
+document.getElementById("id_du_div1").innerHTML=mydata[i].name;
+document.getElementById("img1").src="./img/"+ mydata[i].img;
+document.getElementById("son-image1").src="./audio/"+ mydata[i].audio;
+</script>
+
+
+<br>
+<br>
+<h4>On mouseover: display the word</h4>
+<h4>On click: play the word</h4>
+
+<br>
+
+<br>
+<h5><i>Using Text to speech script (responsivevoice.js) from https://responsivevoice.org/</i></h5>
+</body>
+</html>

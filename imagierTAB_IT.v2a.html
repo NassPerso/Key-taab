@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Libro illustrato digitale</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+<script type="text/javascript" src="dataIT.json"></script>
+<script>
+
+
+
+
+
+</script>
+</head>
+<body>
+
+<div align="center" data-role="page" id="pageone">
+  
+    <h1></h1>
+	
+	  <select id="filter" onchange="filter();">
+<option value="Select a category">Seleziona una categoria</option>
+<option value="Alphabet">Alfabeto</option>
+<option value="Number">Cifri e numeri</option>
+<option value="Color">Colori</option>
+<option value="Human">Umano</option>
+<option value="Object">Oggetti</option>
+<option value="Nature">Natura</option>
+
+</select>
+
+ 
+  <img id="img1" width="300" height="300" >
+
+  
+  <h3><div   id="label1" style="display:none"></div></h3>
+ <div id="inst">
+<h4>Fare clic una volta per visualizzare la parola</h4>
+<h4>Clicca due volte per ascoltare la parola</h4>
+
+<h4>Fai scorrere verso destra e sinistra per cambiare l'immagine</h4>
+
+</div>
+<h5><i>Utilizza strumento di sintesi vocale (responsivevoice.js) https://responsivevoice.org/</i></h5>
+<h5><i>Utilizza immagini di pixabay.com</i></h5>
+
+</div> 
+
+<script>
+document.getElementById("inst").style.display =false  ? '' : 'none';
+document.getElementById("img1").src="./img/key-taab.jpg"
+var display_lbl=false;
+
+
+var mydata = JSON.parse(data);
+
+var output;
+
+var k;
+function filter(){
+k=0;
+if (document.getElementById("filter").value=="Select a category"){document.getElementById("img1").src="./img/key-taab.jpg";
+document.getElementById("inst").style.display =false  ? '' : 'none';
+
+}else{
+document.getElementById("inst").style.display =true  ? '' : 'none';
+output ={};
+var j =0;
+for(var i= 0; i < mydata.length; i++)
+	{
+	
+	if (mydata[i].Categorie == document.getElementById("filter").value)
+	{
+		output[j]=mydata[i];
+		j=j+1;
+	}
+	//console.log(output);
+}
+
+document.getElementById("label1").style.display =false  ? '' : 'none';
+document.getElementById("img1").src="./img/"+ output[k].img;
+document.getElementById("label1").innerHTML = output[k].name;
+}}
+
+
+
+
+
+
+
+var display_lbl;
+
+$(document).on("pagecreate","#pageone",function(){
+  $("img").on("swipeleft",function(){
+  if(output[k-1]){
+  k=k-1;
+display_lbl=false;
+document.getElementById("label1").style.display =false  ? '' : 'none';
+    document.getElementById("img1").src="./img/"+ output[k].img;
+	document.getElementById("label1").innerHTML = output[k].name;
+  }}); 
+  
+  $("img").on("swiperight",function(){
+  if(output[k+1]){
+  k=k+1;
+display_lbl=false;
+document.getElementById("label1").style.display =false  ? '' : 'none';
+    document.getElementById("img1").src="./img/"+ output[k].img;
+   document.getElementById("label1").innerHTML = output[k].name;
+ 
+  }}); 
+  $("img").on("tap",function(){
+ if (display_lbl==true){ 
+ responsiveVoice.speak(output[k].name, "Italian Female");
+
+ display_lbl=false;
+document.getElementById("label1").style.display =false  ? '' : 'none';
+}else{ document.getElementById("label1").style.display =true  ? '' : 'none';
+ 
+display_lbl=true;
+ }
+  });
+});
+
+
+</script>
+
+
+</body>
+</html>

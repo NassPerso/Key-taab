@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+ <title>Question/Answer cards</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+<script type="text/javascript" src="QA.json"></script>
+<script>
+
+
+
+</script>
+</head>
+<body>
+
+<div align="center" data-role="page" id="pageone">
+  
+    <h1></h1>
+  <select id="filter" onchange="filter();">
+<option>Selectionnez une catégorie</option>
+<option>English</option>
+<option>Español</option>
+<option>Italiano</option>
+<option>Deutsch</option>
+<option>Geo</option>
+<option>Math</option>
+<option>Histoire</option>
+</select>
+<h3>
+<table><tr><td width="10%">
+
+<button id="prev" onclick="left();">Précédent</button>
+
+
+</td><td width="80%">
+<h3> <p id="label2" onclick="display();" align="center"></p></h3>
+
+  
+<h5>  <p   id="label1" style="display:none" align="center"></p></h5>
+
+ <div id="inst" align="center">
+ <br>
+<h6>Cliquez une fois pour afficher la réponse</h6>
+
+</div>
+
+
+</td><td>
+<button id="next" onclick="right();">Suivant</button>
+
+
+
+</td></tr></table>
+  
+
+</div> 
+
+<script>
+document.getElementById("inst").style.display =false  ? '' : 'none';
+document.getElementById("prev").style.display =false  ? '' : 'none';
+document.getElementById("next").style.display =false  ? '' : 'none';
+//document.getElementById("img1").src="./img/key-taab.jpg"
+var display_lbl=false;
+var j =0;
+
+var mydata = JSON.parse(data);
+
+var output ={};
+
+
+function filter(){
+k=0;
+if (document.getElementById("filter").value=="Select a category"){
+//document.getElementById("img1").src="./img/key-taab.jpg";
+document.getElementById("inst").style.display =false  ? '' : 'none';
+
+}else{
+document.getElementById("inst").style.display =true  ? '' : 'none';
+output ={};
+j=0;
+for(var i= 0; i < mydata.length; i++)
+	{
+	
+	if (mydata[i].Categorie == document.getElementById("filter").value)
+	{
+		output[j]=mydata[i];
+		j=j+1;
+	}
+	//console.log(output);
+}
+
+document.getElementById("label1").style.display =false  ? '' : 'none';
+document.getElementById("label2").innerHTML = output[0].quest;
+document.getElementById("label1").innerHTML = output[0].answ;
+}kk();}
+
+
+
+
+
+var k=0;
+
+var display_lbl;
+function left(){
+k=k-1;
+document.getElementById("label1").style.display =false  ? '' : 'none';
+document.getElementById("label2").innerHTML = output[k].quest;
+document.getElementById("label1").innerHTML = output[k].answ;
+kk();
+}
+function right(){k=k+1;
+
+document.getElementById("label1").style.display =false  ? '' : 'none';
+document.getElementById("label2").innerHTML = output[k].quest;
+document.getElementById("label1").innerHTML = output[k].answ;
+
+kk();
+}
+function display(){ 
+ //responsiveVoice.speak(output[i].name);
+if (display_lbl==true){
+document.getElementById("label1").style.display =false  ? '' : 'none';
+display_lbl=false;
+ }else {
+document.getElementById("label1").style.display =true  ? '' : 'none';
+display_lbl=true; }
+
+
+}
+function kk(){
+display_lbl=false;
+if (output[k+1]){document.getElementById("next").style.display =true  ? '' : 'none';} else {document.getElementById("next").style.display =false  ? '' : 'none';}
+if (output[k-1]){document.getElementById("prev").style.display =true  ? '' : 'none';} else {document.getElementById("prev").style.display =false  ? '' : 'none';}
+}
+
+
+</script>
+
+
+</body>
+</html>

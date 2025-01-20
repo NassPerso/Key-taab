@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Imagier numérique</title>
+  <script type="text/javascript" src="dataFR.json"></script>
+
+<script src="jquery-1.11.3.min.js"></script>
+<script>
+var i = 0;
+function previous(){document.getElementById("id_du_div1").innerHTML=mydata[i-1].name;
+document.getElementById("img1").src="./img/"+ mydata[i-1].img;
+document.getElementById("son-image1").src="./audio/"+ mydata[i-1].audio;
+i=i+1;};
+function next(){
+document.getElementById("id_du_div1").innerHTML=mydata[i+1].name;
+document.getElementById("img1").src="./img/"+ mydata[i+1].img;
+document.getElementById("son-image1").src="./audio/"+ mydata[i+1].audio;
+i=i+1;
+};
+function affiche(id, b) {
+  document.getElementById(id).style.display = b ? '' : 'none';
+}
+$(function() {
+    $('.image').click(function() {
+        var num = $(this).attr('data-num');
+        $('#son-' + num).get(0).play();
+    });
+});
+
+
+  
+</script>
+
+</head>
+<body>
+<script>
+var mydata = JSON.parse(data);
+
+</script>
+
+<audio id="son-image1" ></audio>
+<table>
+<tr><td><img id="img1" onmouseover="affiche('id_du_div1',true)" onmouseout="affiche('id_du_div1',false)" class="image" data-num="image1" width="300" height="300">
+
+</td>
+</tr>
+<tr><td><div id="id_du_div1" style="display:none;"></div>
+</td>
+</tr>
+<tr><td><button onclick="previous()">précédent</button>
+<button onclick="next()">suivant</button></td></tr>
+</table>
+
+
+
+
+<script>
+document.getElementById("id_du_div1").innerHTML=mydata[i].name;
+document.getElementById("img1").src="./img/"+ mydata[i].img;
+document.getElementById("son-image1").src="./audio/"+ mydata[i].audio;
+</script>
+
+
+<br>
+<br>
+<h4>Survolez l'image pour afficher le mot</h4>
+<h4>Cliquez sur l'image pour écouter le mot</h4>
+
+</body>
+</html>

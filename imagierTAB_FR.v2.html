@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Imagier numérique</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+<script type="text/javascript" src="dataFR.json"></script>
+<script>
+
+
+
+
+
+</script>
+</head>
+<body>
+
+		
+		<script type="text/javascript">
+			
+			
+			
+
+			function speak () {
+				//var msg = new SpeechSynthesisUtterance();
+				//msg.volume = volumeSlider.value;
+				//msg.volume = 1;
+				//msg.voice = voiceMap[voiceOptions.value];
+				//msg.voice = voiceMap["Google français"];
+				//msg.rate = rateSlider.value;
+				//msg.rate = 1;
+				//msg.Pitch = pitchSlider.value;
+				//msg.Pitch = 1;
+				//msg.text = myText.value;
+				//msg.text = output[k].name;
+				responsiveVoice.speak(output[k].name, "French Female");
+				//window.speechSynthesis.speak(msg);
+			};
+		</script>
+<div align="center" data-role="page" id="pageone">
+  
+    <h1></h1>
+  <select id="filter" onchange="filter();">
+<option value="Select a category">Sélectionnez une catégorie</option>
+<option value="Alphabet">Alphabet</option>
+<option value="Number">Chiffres et nombres</option>
+<option value="Color">Couleurs</option>
+<option value="Human">L'être humain</option>
+<option value="Object">Objets</option>
+<option value="Nature">Nature</option>
+</select>
+
+ 
+  <table><tr><td><button style="display:none" id="Previous" onclick="Previous()"> &larr; </button></td>
+<td align="center"<>
+  <img id="img1" width="300" height="300" >
+
+  
+  <h3><div   id="label1" style="display:none"></div></h3></td>
+  <td><button style="display:none" id="Next" onclick="Next()" > &rarr; </button></td></tr></table>
+ <div id="inst">
+<h5>Cliquez sur l'image pour afficher le mot</h5>
+<h5>Double-cliquez sur l'image pour entendre le mot</h5>
+
+<h5>Faites glisser à droite ou à gauche pour changer d'image</h5>
+
+</div>
+<h7><i>Utilise l'outil de synthèse vocal (responsivevoice.js) disponible à https://responsivevoice.org/</i></h7><br>
+<h7><i>Les images proviennent de pixabay.com</i></h7>
+
+</div> 
+
+<script>
+document.getElementById("inst").style.display =false  ? '' : 'none';
+document.getElementById("img1").src="./img/key-taab.jpg"
+var display_lbl=false;
+
+
+var mydata = JSON.parse(data);
+
+var output;
+
+var k;
+function filter(){
+k=0;
+if (document.getElementById("filter").value=="Select a category"){document.getElementById("img1").src="./img/key-taab.jpg";
+document.getElementById("inst").style.display =false  ? '' : 'none';
+
+}else{
+document.getElementById("inst").style.display =true  ? '' : 'none';
+output ={};
+var j =0;
+for(var i= 0; i < mydata.length; i++)
+	{
+	
+	if (mydata[i].Categorie == document.getElementById("filter").value)
+	{
+		output[j]=mydata[i];
+		j=j+1;
+	}
+	//console.log(output);
+	document.getElementById("Next").style.display =true  ? '' : 'none';
+}
+
+document.getElementById("label1").style.display =false  ? '' : 'none';
+document.getElementById("img1").src="./img/"+ output[k].img;
+document.getElementById("label1").innerHTML = output[k].name;
+}}
+
+
+
+function Previous(){
+
+document.getElementById("Next").style.display =true  ? '' : 'none';
+
+if(output[k-1]){
+  k=k-1;
+display_lbl=false;
+document.getElementById("label1").style.display =false  ? '' : 'none';
+    document.getElementById("img1").src="./img/"+ output[k].img;
+	document.getElementById("label1").innerHTML = output[k].name;
+  }
+  
+if (k>0){document.getElementById("Previous").style.display =true  ? '' : 'none'}
+else {document.getElementById("Previous").style.display =false  ? '' : 'none'}
+}
+
+function Next(){
+document.getElementById("Previous").style.display =true  ? '' : 'none';
+if (output[k+2]){}
+else(document.getElementById("Next").style.display =false  ? '' : 'none')
+
+if(output[k+1]){
+  k=k+1;
+display_lbl=false;
+document.getElementById("label1").style.display =false  ? '' : 'none';
+    document.getElementById("img1").src="./img/"+ output[k].img;
+   document.getElementById("label1").innerHTML = output[k].name;
+ 
+  }
+}
+
+var display_lbl;
+
+$(document).on("pagecreate","#pageone",function(){
+  $("img").on("swipeleft",function(){
+  Previous();
+  }); 
+  
+  $("img").on("swiperight",function(){
+  Next();
+  }); 
+  $("img").on("tap",function(){
+ if (display_lbl==true){ 
+ responsiveVoice.speak(output[k].name,"French Female");
+
+ display_lbl=false;
+document.getElementById("label1").style.display =false  ? '' : 'none';
+}else{ document.getElementById("label1").style.display =true  ? '' : 'none';
+ 
+display_lbl=true;
+ }
+  });
+});
+
+
+</script>
+
+
+</body>
+</html>

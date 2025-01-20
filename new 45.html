@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Imagier numérique</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src='responsivevoice.js'></script>
+<script type="text/javascript" src="dataFR.json"></script>
+<style>
+#selected{
+    background-color: #ffffff;
+    width: 100%;
+    height: 100%;
+    
+  position: absolute;
+z-index: 1
+
+
+}
+body{width: 100%;
+
+      heigth: 100%;
+  
+   
+}td{width: 25%;
+
+      heigth: 25%;
+  
+   
+}
+</style>
+</head>
+<body >
+<button   id="Previous"  onclick="Previous()"> &larr; </button>
+<h1 id="spec">Test</h1>
+</body>
+</html>
+<script>
+function Previous(){
+document.getElementById("spec").style.color ="red";
+}
+</script>

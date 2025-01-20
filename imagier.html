@@ -1,0 +1,202 @@
+
+	<!doctype html>
+<html>
+<head>
+ <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Imagier numérique</title>
+		<style type="text/css">
+			body{
+				background: #f6f6f6;
+			}
+			
+			.container{
+				display:none;
+				background: #f6f6f6;
+				position: absolute;
+				top:50%;
+				left:50%;
+				transform: translateX(-50%) translateY(-50%);
+				width: 400px;
+				padding:20px;
+				box-shadow: 0 0 10px 0 #ccc;
+			}
+			.container textarea{
+				width: 390px;
+				height: 100px;
+				resize: none;
+				outline: none;
+				border: 1px solid #ccc;
+			}
+			.container label{
+				display: block;
+				width: 400px;
+			}
+			.container label span{
+				width: 100px;
+				margin-top: 20px;
+				display: inline-block;
+			}
+			.container label select, .container label input{
+				width: 290px;
+			}
+			.button{
+				display: inline-block;
+				background: #f6f6f6;
+				padding: 10px 20px;
+				color: #000;
+				border: 1px solid #ccc;
+				cursor: pointer;
+				margin-top: 20px;
+			}
+			.button:hover{
+				box-shadow: 4px 4px 10px 0 #ccc;
+			}
+
+
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h3>Text to speech converter in JS</h3>
+			<textarea id="myText">Hello, this is sam. Today, we are learning the text to speech converter in JS</textarea>
+			<label>
+				<span>Voice</span>
+				<select id="voiceOptions"></select>
+			</label>
+			<label>
+				<span>Volume</span>
+				<input type="range" id="volumeSlider" min="0" max="1" value="0.5" step="0.1" />
+			</label>
+			<label>
+				<span>rate</span>
+				<input type="range" id="rateSlider" min="0" max="1" value="0.5" step="0.1" />
+			</label>
+			<label>
+				<span>Pitch</span>
+				<input type="range" id="pitchSlider" min="0" max="2" value="0.5" step="0.1" />
+			</label>
+			<div class="button" onclick="speak();">Speak</div>
+		</div>
+		<script type="text/javascript">
+
+			function checkCompatibilty () {
+				if(!('speechSynthesis' in window)){
+					alert('Your browser is not supported. If google chrome, please upgrade!!');
+				}
+			};
+
+			checkCompatibilty();
+
+			var voiceOptions = document.getElementById('voiceOptions');
+			var volumeSlider = document.getElementById('volumeSlider');
+			var rateSlider = document.getElementById('rateSlider');
+			var pitchSlider = document.getElementById('pitchSlider');
+			var myText = document.getElementById('myText');
+
+			var voiceMap = [];
+
+			function loadVoices () {
+				var voices = speechSynthesis.getVoices();
+				for (var i = 0; i < voices.length; i++) {
+					var voice = voices[i];
+					var option = document.createElement('option');
+					option.value = voice.name;
+					option.innerHTML = voice.name;
+					voiceOptions.appendChild(option);
+					voiceMap[voice.name] = voice;
+				};
+			};
+
+			window.speechSynthesis.onvoiceschanged = function(e){
+				loadVoices();
+			};
+
+			function speak () {
+				var msg = new SpeechSynthesisUtterance();
+				//msg.volume = volumeSlider.value;
+				msg.volume = 1;
+				//msg.voice = voiceMap[voiceOptions.value];
+				msg.voice = voiceMap["Google français"];
+				//msg.rate = rateSlider.value;
+				msg.rate = 1;
+				//msg.Pitch = pitchSlider.value;
+				msg.Pitch = 1;
+				//msg.text = myText.value;
+				msg.text = mydata[i].name
+				window.speechSynthesis.speak(msg);
+			};
+		</script>
+		  <script type="text/javascript" src="dataFR.json"></script>
+
+<script src="jquery-1.11.3.min.js"></script>
+<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+<script>
+var i = 0;
+function previous(){document.getElementById("id_du_div1").innerHTML=mydata[i-1].name;
+document.getElementById("img1").src="./img/"+ mydata[i-1].img;
+document.getElementById("son-image1").src="./audio/"+ mydata[i-1].audio;
+i=i+1;};
+function next(){
+document.getElementById("id_du_div1").innerHTML=mydata[i+1].name;
+document.getElementById("img1").src="./img/"+ mydata[i+1].img;
+document.getElementById("son-image1").src="./audio/"+ mydata[i+1].audio;
+i=i+1;
+};
+function affiche(id, b) {
+  document.getElementById(id).style.display = b ? '' : 'none';
+}
+$(function() {
+    $('.image').click(function() {
+        var num = $(this).attr('data-num');
+        //$('#son-' + num).get(0).play();
+		//responsiveVoice.speak(mydata[i].name);
+		speak();
+    });
+});
+
+
+  
+</script>
+
+</head>
+<body>
+<script>
+var mydata = JSON.parse(data);
+
+</script>
+
+<audio id="son-image1" ></audio>
+<table>
+<tr><td><img id="img1" onmouseover="affiche('id_du_div1',true)" onmouseout="affiche('id_du_div1',false)" class="image" data-num="image1" width="300" height="300">
+
+</td>
+</tr>
+<tr><td><h3><div align="center" id="id_du_div1" style="display:none;"></h3></div>
+</td>
+</tr>
+<tr><td align="center"><button onclick="previous()">précédent</button>
+<button onclick="next()">suivant</button></td></tr>
+</table>
+
+
+
+
+<script>
+document.getElementById("id_du_div1").innerHTML=mydata[i].name;
+document.getElementById("img1").src="./img/"+ mydata[i].img;
+document.getElementById("son-image1").src="./audio/"+ mydata[i].audio;
+
+</script>
+
+
+<br>
+<br>
+<h4>Survolez l'image pour afficher le mot</h4>
+<h4>Cliquez sur l'image pour entendre le mot</h4>
+<script></script>
+<br>
+
+<br>
+<h5><i>Utilise l'API Window.speechSynthesis avec la langue "Google français"</i></h5>
+	</body>
+</html>

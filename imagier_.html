@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Imagier numérique</title>
+  <script type="text/javascript" src="dataFR.json"></script>
+
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script>
+function affiche(id, b) {
+  document.getElementById(id).style.display = b ? '' : 'none';
+}
+$(function() {
+    $('.image').click(function() {
+        var num = $(this).attr('data-num');
+        $('#son-' + num).get(0).play();
+    });
+});
+
+  var text
+  
+</script>
+
+</head>
+<body>
+<script>
+var mydata = JSON.parse(data);
+
+</script>
+
+
+<table>
+<tr><td><img id="img1" onmouseover="affiche('id_du_div1',true)" onmouseout="affiche('id_du_div1',false)" class="image" data-num="image1" width="150" height="150">
+
+</td><td><img id="img2" onmouseover="affiche('id_du_div2',true)" onmouseout="affiche('id_du_div2',false)" class="image" data-num="image2" width="150" height="150">
+</td>
+</tr>
+<tr><td><div id="id_du_div1" style="display:none;"><script>document.write(mydata[1].name);</script></div>
+</td>
+<td><div id="id_du_div2" style="display:none;"><script>document.write(mydata[0].name);</script></div>
+</td></tr>
+</table>
+
+<audio id="son-image1" ></audio>
+<audio id="son-image2" ></audio>
+
+<script>
+
+document.getElementById("img1").src="./img/"+ mydata[1].img;
+document.getElementById("img2").src="./img/"+ mydata[0].img;
+document.getElementById("son-image1").src="./audio/"+ mydata[1].audio;
+document.getElementById("son-image2").src="./audio/"+ mydata[0].audio;
+</script>
+
+</body>
+</html>
